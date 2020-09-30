@@ -1,0 +1,2 @@
+docker run --rm --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=1 -v postgres-data:/var/lib/postgresql/data -d postgres
+docker exec -it postgres psql -U postgres -h localhost -W

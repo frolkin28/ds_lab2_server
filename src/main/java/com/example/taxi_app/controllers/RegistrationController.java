@@ -1,7 +1,7 @@
 package com.example.taxi_app.controllers;
 
-import com.example.taxi_app.exceptions.InvalidCarNumber;
-import com.example.taxi_app.models.Driver;
+import com.example.taxi_app.exceptions.InvalidEmail;
+import com.example.taxi_app.models.User;
 import com.example.taxi_app.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,15 +25,15 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
 
-    @PostMapping("driver")
-    public ResponseEntity<HashMap<String, String>> register(@RequestBody Driver driver) {
+    @PostMapping
+    public ResponseEntity<HashMap<String, String>> register(@RequestBody User user) {
         HashMap<String, String> response = new HashMap<>();
         try {
-            registrationService.registerDriver(driver);
-            response.put("message", "Driver has been successfully registered");
+            registrationService.registerUser(user);
+            response.put("message", "User has been successfully registered");
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
-        catch (InvalidCarNumber e) {
+        catch (InvalidEmail e) {
             response.put("message", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }

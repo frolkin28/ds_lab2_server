@@ -1,7 +1,5 @@
 package com.example.taxi_app.filters;
 
-import com.example.taxi_app.repositories.DriverRepository;
-import com.example.taxi_app.services.DriverService;
 import com.example.taxi_app.services.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -29,8 +27,10 @@ public class AuthFilter extends GenericFilterBean {
             try {
                 Claims claims = Jwts.parser().setSigningKey(TokenService.getApiSecretKey())
                         .parseClaimsJws(token).getBody();
-                String login = claims.get("login").toString();
-                httpRequest.setAttribute("login", login);
+                String login = claims.get("email").toString();
+                int role = Integer.parseInt(claims.get("role").toString());
+                httpRequest.setAttribute("email", login);
+                httpRequest.setAttribute("role", role);
             } catch (Exception e) {
                 httpResponse.sendError(HttpStatus.FORBIDDEN.value(), "invalid/expired token");
                 return;

@@ -1,7 +1,7 @@
 package com.example.taxi_app.services;
 
-import com.example.taxi_app.exceptions.InvalidCarNumber;
-import com.example.taxi_app.models.Driver;
+import com.example.taxi_app.exceptions.InvalidEmail;
+import com.example.taxi_app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.mindrot.jbcrypt.BCrypt;
@@ -9,20 +9,20 @@ import org.mindrot.jbcrypt.BCrypt;
 
 @Service
 public class RegistrationService {
-    private final DriverService driverDAO;
     private final ValidationService validationService;
+    private final UserService userService;
 
     @Autowired
-    public RegistrationService(DriverService driverDAO, ValidationService validationService) {
-        this.driverDAO = driverDAO;
+    public RegistrationService(ValidationService validationService, UserService userService) {
         this.validationService = validationService;
+        this.userService = userService;
     }
 
-    public void registerDriver(Driver driver) throws InvalidCarNumber {
-        validationService.validateCarNumber(driver.getCarNumber());
-        String hashedPassword = BCrypt.hashpw(driver.getPassword(), BCrypt.gensalt(10));
-        driver.setPassword(hashedPassword);
-        driverDAO.add(driver);
+    public void registerUser(User user) throws InvalidEmail {
+        validationService.validateEmail(user.getEmail());
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
+        user.setPassword(hashedPassword);
+        userService.add(user);
     }
 
 }

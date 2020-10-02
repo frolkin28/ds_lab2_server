@@ -1,8 +1,9 @@
 package com.example.taxi_app.controllers;
 
-import com.example.taxi_app.models.Driver;
-import com.example.taxi_app.services.DriverService;
+import com.example.taxi_app.models.User;
+import com.example.taxi_app.services.UserService;
 import com.example.taxi_app.services.TokenService;
+import com.example.taxi_app.services.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,29 +15,31 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @RestController
 @RequestMapping("login")
 public class LoginController {
 
-    private final DriverService driverService;
+    private final UserService userService;
     private final TokenService tokenService;
 
     @Autowired
-    public LoginController(DriverService driverService, TokenService tokenService) {
-        this.driverService = driverService;
+    public LoginController(UserService userService, TokenService tokenService) {
+        this.userService = userService;
         this.tokenService = tokenService;
     }
 
-    @GetMapping("driver")
+    @GetMapping
     public ResponseEntity<HashMap<String, String>> loginDriver(@RequestBody Map<String, Object> userMap) {
-        String car_number = (String) userMap.get("carNumber");
+        String email = (String) userMap.get("email");
         String password = (String) userMap.get("password");
 
-        Driver validatedDriver = driverService.validate(car_number, password);
+        User validatedUser = userService.validate(email, password);
         HashMap<String, String> response = new HashMap<>();
+        Role role = validatedUser.getRole();
 
-        if (validatedDriver != null) {
-            String token = tokenService.generateJWTToken(validatedDriver.getCarNumber());
+        if (validatedUser != null) {
+            String token = tokenService.generateJWTToken(validatedUser.getEmail(), role);
             response.put("token", token);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

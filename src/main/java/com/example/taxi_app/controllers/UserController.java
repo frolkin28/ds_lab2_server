@@ -1,7 +1,7 @@
 package com.example.taxi_app.controllers;
 
-import com.example.taxi_app.models.Driver;
-import com.example.taxi_app.services.DriverService;
+import com.example.taxi_app.models.User;
+import com.example.taxi_app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,25 +11,25 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 
-@RestController()
-@RequestMapping("api/v1/driver")
-public class DriverController {
+@RestController
+@RequestMapping("api/v1/user")
+public class UserController {
 
-    private final DriverService driverDao;
+    private final UserService userService;
 
     @Autowired
-    public DriverController(DriverService driverDao) {
-        this.driverDao = driverDao;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping()
-    public Iterable<Driver> getAll() {
-        return driverDao.getAll();
+    public Iterable<User> getAll(HttpServletRequest request) {
+        return userService.getAll();
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(HttpServletRequest request, @PathVariable(value = "id") UUID id ) {
-        driverDao.remove(id);
+        userService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -1,6 +1,6 @@
 package com.example.taxi_app.repositories;
 
-import com.example.taxi_app.models.Driver;
+import com.example.taxi_app.models.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,13 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 @Repository
-public interface DriverRepository extends CrudRepository<Driver, String> {
+public interface UserRepository extends CrudRepository<User, String> {
     @Transactional
     @Modifying
-    @Query("delete from Driver d where d.id = ?1")
+    @Query("delete from User u where u.id = ?1")
     void deleteById(UUID id);
 
-    @Query("select d from Driver d where d.carNumber='?1'")
-    Driver findByCarNumber(String carNumber);
-
+    User findByEmail(String carNumber);
 }

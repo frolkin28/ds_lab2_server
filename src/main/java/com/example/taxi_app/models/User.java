@@ -31,12 +31,4 @@ public class User {
 
     @OneToOne
     private Car car;
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-//    private List<Order> madeOrders;
-//
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
-//    private List<Order> processedOrders;
 }

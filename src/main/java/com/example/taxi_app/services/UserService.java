@@ -21,6 +21,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public void add(User driver) {
         userRepository.save(driver);
     }

@@ -1,12 +1,13 @@
 package com.example.taxi_app.services;
 
 import com.example.taxi_app.models.Location;
+import org.springframework.stereotype.Service;
 
 import java.lang.Math;
 
-
+@Service
 public class CostService {
-    private static final float price_per_km = 10;
+    private static final float price_per_m = 0.01f;
     private static final int earth_radius = 6371;
 
     public float calculate(Location from, Location destination) {
@@ -18,8 +19,12 @@ public class CostService {
                 * Math.cos(Math.toRadians(destination.getLatitude()))
                 * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
 
+        System.out.println(a);
+
         double distance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * earth_radius;
 
-        return (float)(distance * price_per_km);
+        System.out.println(distance);
+
+        return (float)(distance * price_per_m);
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 @RestController
@@ -22,7 +21,7 @@ public class CarController {
     }
 
     @GetMapping
-    public Iterable<Car> getAll(HttpServletRequest request) {
+    public Iterable<Car> getAll() {
         return carService.getAll();
     }
 
@@ -33,7 +32,7 @@ public class CarController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(HttpServletRequest request, @PathVariable(value = "id") UUID id ) {
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") UUID id ) {
         carService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -30,15 +30,15 @@ public class LoginController {
     }
 
     @GetMapping
-    public ResponseEntity<HashMap<String, String>> loginDriver(@RequestBody Map<String, Object> userMap) {
+    public ResponseEntity<HashMap<String, String>> login(@RequestBody Map<String, Object> userMap) {
         String email = (String) userMap.get("email");
         String password = (String) userMap.get("password");
 
         User validatedUser = userService.validate(email, password);
         HashMap<String, String> response = new HashMap<>();
-        Role role = validatedUser.getRole();
 
         if (validatedUser != null) {
+            Role role = validatedUser.getRole();
             String token = tokenService.generateJWTToken(validatedUser.getEmail(), role);
             response.put("token", token);
             return new ResponseEntity<>(response, HttpStatus.OK);

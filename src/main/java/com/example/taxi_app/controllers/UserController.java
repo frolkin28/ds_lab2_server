@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 
@@ -23,12 +22,12 @@ public class UserController {
     }
 
     @GetMapping()
-    public Iterable<User> getAll(HttpServletRequest request) {
+    public Iterable<User> getAll() {
         return userService.getAll();
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(HttpServletRequest request, @PathVariable(value = "id") UUID id ) {
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") UUID id ) {
         userService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

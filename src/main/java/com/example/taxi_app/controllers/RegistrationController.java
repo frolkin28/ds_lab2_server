@@ -29,6 +29,7 @@ public class RegistrationController {
     public ResponseEntity<HashMap<String, String>> register(@RequestBody User user) {
         HashMap<String, String> response = new HashMap<>();
         try {
+            System.out.println(user);
             registrationService.registerUser(user);
             response.put("message", "User has been successfully registered");
             return new ResponseEntity<>(response, HttpStatus.CREATED);

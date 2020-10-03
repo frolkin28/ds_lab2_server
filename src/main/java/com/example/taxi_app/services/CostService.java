@@ -19,11 +19,7 @@ public class CostService {
                 * Math.cos(Math.toRadians(destination.getLatitude()))
                 * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
 
-        System.out.println(a);
-
         double distance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * earth_radius;
-
-        System.out.println(distance);
 
         return (float)(distance * price_per_m);
     }

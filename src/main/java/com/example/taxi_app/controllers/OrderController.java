@@ -32,7 +32,7 @@ public class OrderController {
         if (role == Role.DRIVER.ordinal() && email != null) {
             User driver = userService.getByEmail(email);
             Order order = orderService.getOrder(driver);
-            return new ResponseEntity<>(order, HttpStatus.CREATED);
+            return new ResponseEntity<>(order, HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
